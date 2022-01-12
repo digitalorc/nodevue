@@ -30,8 +30,8 @@ const util = require('util');
 const Promise = require('bluebird');
 const Pool = require('./modules/dbpool');
 
-let sql1 = 'update Test set loginDate = now() where ttt="user1" ';
-let sql2 = 'update Test set loginDate1 = now() where ttt="user2" ';
+let sql1 = 'update Test set loginDate = now() where id=6 ';
+let sql2 = 'update Test set loginDate = now() where id=7 ';
 
 const pool = new Pool();
 
@@ -54,18 +54,26 @@ const pool = new Pool();
 
 
 Promise.using(pool.connect(), conn => {
-    Promise.all([
-        conn.queryAsync(sql1),
-        conn.queryAsync(sql2)
-    ])
-    .then(r => {
-        util.log('sql1 =', r[0].affectedRows);    
-        util.log('sql2 =', r[1].affectedRows);    
-        pool.end();
-    })
-    .catch(err => {
-        util.log('error ===> ', err);
-        pool.end();
+    conn.beginTransaction( txerr => {
+        Promise.all([
+            conn.queryAsync(sql1),
+            conn.queryAsync(sql2)
+            
+        ]).then(r => {
+            for(let i=0; i< r.length; i++)
+              util.log(`sql${i+1}=`, r[i].affectedRows);    
+
+            conn.commit();
+            pool.end();
+
+        }).catch(err => {
+            util.log('error ===> ', err);
+            conn.rollback();
+            pool.end();
+        });
+
+        util.log('txerr :', txerr);
     });
+  
 });
 
