@@ -1,0 +1,37 @@
+{
+  "dependencies": {
+    "bluebird": "^3.7.2",
+    "body-parser": "^1.19.1",
+    "crypto-js": "^4.1.1",
+    "ejs": "^3.1.6",
+    "express": "^4.17.2",
+    "hashmap": "^2.4.0",
+    "mysql": "^2.18.1",
+    "open-graph-scraper": "^4.11.0",
+    "vue": "^2.6.14"
+  },
+  "name": "nodevue",
+  "version": "0.0.0",
+  "description": "node & vue examples",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitalorc/nodevue.git"
+  },
+  "keywords": [
+    "node",
+    "vue"
+  ],
+  "author": "hyosubin",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digitalorc/nodevue/issues"
+  },
+  "homepage": "https://github.com/digitalorc/nodevue#readme"
+}
