@@ -58,7 +58,7 @@ Promise.using(pool.connect(), conn => {
         Promise.all([
             conn.queryAsync(sql1),
             conn.queryAsync(sql2)
-            
+
         ]).then(r => {
             for(let i=0; i< r.length; i++)
               util.log(`sql${i+1}=`, r[i].affectedRows);    
@@ -76,4 +76,32 @@ Promise.using(pool.connect(), conn => {
     });
   
 });
+
+
+function execTransactionQuery(ArraySQL) {
+  Promise.using(pool.connect(), conn => {
+    conn.beginTransaction( txerr => {
+        Promise.all([
+            for(let i=0; i<ArraySQL.length; i)
+            conn.queryAsync(ArraySQL[i]),
+            conn.queryAsync(ArraySQL[i])
+
+        ]).then(r => {
+            for(let i=0; i< r.length; i++)
+              util.log(`sql${i+1}=`, r[i].affectedRows);    
+
+            conn.commit();
+            pool.end();
+
+        }).catch(err => {
+            util.log('error ===> ', err);
+            conn.rollback();
+            pool.end();
+        });
+
+        util.log('txerr :', txerr);
+    });
+  
+});
+}
 
