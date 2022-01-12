@@ -30,8 +30,8 @@ const util = require('util');
 const Promise = require('bluebird');
 const Pool = require('./modules/dbpool');
 
-let sql1 = 'update Test set loginDate = now() where uid=user1 ';
-let sql2 = 'update Test set loginDate = now() where uid=user2 ';
+let sql1 = 'update Test set loginDate = now() where uid="user1" ';
+let sql2 = 'update Test set loginDate = now() where uid="user2" ';
 
 const pool = new Pool();
 
@@ -78,21 +78,16 @@ const pool = new Pool();
 // });
 
 
-function execTransaction(ArraySQL) {
+function execTransaction(sqls) {  
   Promise.using(pool.connect(), conn => {
+    const queries=[];
+    sqls.forEach( item => {
+      if (item.length >5)
+        queries.push(conn.queryAsync(item) )
+    });
+
     conn.beginTransaction( txerr => {
-        Promise.all([
-            // for( v of ArraySQL) {
-            //   if(v !== null)
-            //     conn.queryAsync(v);
-            // }
-
-            ArraySQL.forEach( item => {
-              if (item.length >5)
-                conn.queryAsync(item) ;
-            })
-
-        ]).then(r => {
+        Promise.all(queries).then(r => {
             for(let i=0; i< r.length; i++)
               util.log(`sql${i+1}=`, r[i].affectedRows);    
 
@@ -110,3 +105,4 @@ function execTransaction(ArraySQL) {
   });
 }
 
+execTransaction([sql1, sql2]);
