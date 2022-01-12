@@ -30,8 +30,8 @@ const util = require('util');
 const Promise = require('bluebird');
 const Pool = require('./modules/dbpool');
 
-let sql1 = 'update Test set loginDate = now() where id=6 ';
-let sql2 = 'update Test set loginDate = now() where id=7 ';
+let sql1 = 'update Test set loginDate = now() where uid=user1 ';
+let sql2 = 'update Test set loginDate = now() where uid=user2 ';
 
 const pool = new Pool();
 
@@ -53,38 +53,44 @@ const pool = new Pool();
 // });
 
 
-Promise.using(pool.connect(), conn => {
-    conn.beginTransaction( txerr => {
-        Promise.all([
-            conn.queryAsync(sql1),
-            conn.queryAsync(sql2)
+// Promise.using(pool.connect(), conn => {
+//     conn.beginTransaction( txerr => {
+//         Promise.all([
+//             conn.queryAsync(sql1),
+//             conn.queryAsync(sql2)
 
-        ]).then(r => {
-            for(let i=0; i< r.length; i++)
-              util.log(`sql${i+1}=`, r[i].affectedRows);    
+//         ]).then(r => {
+//             for(let i=0; i< r.length; i++)
+//               util.log(`sql${i+1}=`, r[i].affectedRows);    
 
-            conn.commit();
-            pool.end();
+//             conn.commit();
+//             pool.end();
 
-        }).catch(err => {
-            util.log('error ===> ', err);
-            conn.rollback();
-            pool.end();
-        });
+//         }).catch(err => {
+//             util.log('error ===> ', err);
+//             conn.rollback();
+//             pool.end();
+//         });
 
-        util.log('txerr :', txerr);
-    });
+//         util.log('txerr :', txerr);
+//     });
   
-});
+// });
 
 
-function execTransactionQuery(ArraySQL) {
+function execTransaction(ArraySQL) {
   Promise.using(pool.connect(), conn => {
     conn.beginTransaction( txerr => {
         Promise.all([
-            ArraySQL.foreach {v
-              conn.queryAsync(sql1);
-            }
+            // for( v of ArraySQL) {
+            //   if(v !== null)
+            //     conn.queryAsync(v);
+            // }
+
+            ArraySQL.forEach( item => {
+              if (item.length >5)
+                conn.queryAsync(item) ;
+            })
 
         ]).then(r => {
             for(let i=0; i< r.length; i++)
@@ -101,7 +107,6 @@ function execTransactionQuery(ArraySQL) {
 
         util.log('txerr :', txerr);
     });
-  
-});
+  });
 }
 
