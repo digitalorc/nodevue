@@ -68,3 +68,4 @@ Promise.using(pool.connect(), conn => {
         pool.end();
     });
 });
+
