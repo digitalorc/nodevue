@@ -82,9 +82,9 @@ function execTransactionQuery(ArraySQL) {
   Promise.using(pool.connect(), conn => {
     conn.beginTransaction( txerr => {
         Promise.all([
-            for(let i=0; i<ArraySQL.length; i)
-            conn.queryAsync(ArraySQL[i]),
-            conn.queryAsync(ArraySQL[i])
+            ArraySQL.foreach {v
+              conn.queryAsync(sql1);
+            }
 
         ]).then(r => {
             for(let i=0; i< r.length; i++)
