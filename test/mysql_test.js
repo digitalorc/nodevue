@@ -28,7 +28,7 @@
 
 const util = require('util');
 const Promise = require('bluebird');
-const Pool = require('./modules/dbpool');
+const Pool = require('../modules/dbpool');
 
 let sql1 = 'update Test set loginDate = now() where uid="user1" ';
 let sql2 = 'update Test set loginDate = now() where uid="user2" ';
