@@ -39,8 +39,22 @@ console.log(regExp.test(tel));
 // console.log(target.match(regexp));
 
 
-const target = 'A AA B BB Aa ABC AAAA Bb';
-const regexp = /A+|B+/g;
-console.log(target.match(regexp));
+//[]범위 지정, 스페이스는 오류, \d ===[0-9], \D는 반대, \w=[A-Za-z0-9_],  \W는 반대(특수문자)
+//[^] means NOT, outside ^[] 는 문자열의 시작 $은 문자열의 마지막
+
+
+// const target = 'A AA B BB Aa ABC AAAA Bb 12.345 6,88 6_7 a_11';
+// const regexp = /A+|B+/g;
+//const regexp = /[A-Z]+/g;
+//const regexp = /[\w]+/g;
+// const regexp = /[^\d]+/g;
+
+// console.log(target.match(regexp));
+
+
+const target = 'https://poiemaweb.com';
+const regexp =/^https/;
+console.log(regExp.test(target));
+console.log(/^(https|http):\/\//.test(target));
 
 
