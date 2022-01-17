@@ -53,7 +53,45 @@ let customEvent = new event.EventEmitter();
 
 const p = require('node:path');
 const fs = require('node:fs');
+const url = require('node:url');
+const qrystring = require('querystring');
 
 
-const normal_path = p.normalize('/user/temp/..////local/bin');
-console.log(normal_path);
+// const normal_path = p.normalize('/user/temp/..////local/bin');
+// console.log(normal_path);
+
+// var is = process.stdin;
+// var os = fs.createWriteStream('output.txt');
+
+// os.on('pipe', (src) => console.log('pipe event!!'));
+
+// is.on('data', data => {
+//   if( data.trim() =='exit') {
+//     is.unpipe(os);
+//     os.end();
+//   }
+// });
+
+// is.pipe(os
+
+
+// const urlStr = 'http://idols.com/hot/g?group=EXID&name=하니&since=2010';
+// let parsedUrl = url.parse(urlStr,true,true);
+// console.log(parsedUrl.query.group, parsedUrl.query.name);
+// const queryObj = {
+//   name:'IU',
+//   song:'좋은날'
+// };
+
+// const qString = qrystring.stringify(queryObj, null, null, { decodeURIComponent: gbkDecodeURIComponent});
+// console.log(qString);
+
+
+// const cluster = require('node:cluster');
+
+
+//readable stream events : 'readable', 'data', 'end', 'close'
+//cluster events : 'fork', 'online', 'listening', 'disconnect', 'exit'
+// worker events : 'message', 'disconnect'
+
+

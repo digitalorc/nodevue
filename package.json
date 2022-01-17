@@ -1,13 +1,16 @@
 {
   "dependencies": {
+    "@types/node": "^17.0.8",
     "bluebird": "^3.7.2",
     "body-parser": "^1.19.1",
     "crypto-js": "^4.1.1",
     "ejs": "^3.1.6",
     "express": "^4.17.2",
     "hashmap": "^2.4.0",
+    "jade": "^1.11.0",
     "mysql": "^2.18.1",
     "open-graph-scraper": "^4.11.0",
+    "typescript": "^4.5.4",
     "vue": "^2.6.14"
   },
   "name": "nodevue",
@@ -33,5 +36,8 @@
   "bugs": {
     "url": "https://github.com/digitalorc/nodevue/issues"
   },
-  "homepage": "https://github.com/digitalorc/nodevue#readme"
+  "homepage": "https://github.com/digitalorc/nodevue#readme",
+  "devDependencies": {
+    "ts-node": "^10.4.0"
+  }
 }
